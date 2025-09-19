@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOT NET Programming using C# - A Beginner's Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #2c3e50;
+        }
+        .section-card {
+            background-color: #FFFFFF;
+            border: 1px solid #EAEAEA;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        h1, h2, h3, h4 {
+            color: #192a56;
+        }
+        h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        pre {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .analogy, .exam-notes, .practice-section {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .analogy {
+            background-color: #e8f6fd;
+            border: 1px solid #b6e0f5;
+        }
+        .exam-notes {
+            background-color: #fdf5e6;
+            border: 1px solid #f6d5a3;
+        }
+        .practice-section {
+            background-color: #f4fdf6;
+            border: 1px solid #c4e9cd;
+        }
+        /* Sidebar */
+        .sidebar {
+            background-color: #2c3e50;
+            color: #fff;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+        .sidebar h2 {
+            color: #fff;
+            border-bottom: 1px solid #1abc9c;
+            margin: 1rem;
+            padding-bottom: 0.5rem;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar ul li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar ul li a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #1abc9c;
+        }
+        .menu-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: #1abc9c;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        .content-wrapper {
+            transition: margin-left 0.3s ease;
+            padding: 1.5rem;
+            margin-left: 0;
+        }
+        .content-wrapper.shift {
+            margin-left: 250px;
+        }
+        .ascii-diagram {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f4f4f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px dashed #d1d5db;
+            white-space: pre;
+            text-align: center;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+        .compilation-step {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .compilation-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (min-width: 1024px) {
+            .sidebar {
+                left: 0;
+            }
+            .menu-toggle {
+                display: none;
+            }
+            .content-wrapper {
+                margin-left: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle">☰</button>
+    <div class="sidebar" id="sidebar">
+        <h2>Index</h2>
+        <ul>
+            <li><a href="#topic1">.NET Platform</a></li>
+            <li><a href="#topic2">.NET Framework</a></li>
+            <li><a href="#topic3">Languages & Tools</a></li>
+            <li><a href="#topic4">Major Components</a></li>
+            <li><a href="#topic5">CLR</a></li>
+            <li><a href="#topic6">Compilation & Execution</a></li>
+            <li><a href="#topic7">.NET 4.6 Stack</a></li>
+            <li><a href="#topic8">.NET Core</a></li>
+            <li><a href="#gemini-tools">Interactive Assistant</a></li>
+        </ul>
+    </div>
+
+    <div class="content-wrapper" id="content-wrapper">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">.NET Programming using C#</h1>
+            <p class="text-lg text-gray-600">Your Beginner-Friendly, Exam-Oriented Guide</p>
+        </header>
+
+        <main>
+            <section id="topic1" class="section-card">
+                <h2>What is .NET Platform?</h2>
+                
+                <h3>1. Definition/Concept</h3>
+                <p>The .NET Platform is the overall ecosystem created by Microsoft for building many different types of applications. It's a broad term that includes runtimes (like .NET Framework and .NET Core), languages (like C#, F#, and VB.NET), and tools (like Visual Studio) that all work together.</p>
+
+                <h3>2. Detailed Explanation</h3>
+                <p>Think of the .NET Platform as a giant toolbox and workshop combined. It's not just one thing, but a collection of everything a developer needs. This includes:</p>
+                <ul class="list-disc list-inside ml-4 space-y-2 mt-2">
+                    <li><strong>Runtimes:</strong> These are the environments where your programs actually run. The two main ones were the .NET Framework (for Windows) and .NET Core (cross-platform). Now, they are unified into just ".NET" (e.g., .NET 8).</li>
+                    <li><strong>Languages:</strong> It supports several programming languages. You write your code in one of these languages. C# is the most popular.</li>
+                    <li><strong>Libraries:</strong> A massive collection of pre-written code (called the Framework Class Library or Base Class Library) that you can use to do common tasks like working with files, connecting to databases, or creating user interfaces.</li>
+                    <li><strong>Tools:</strong> Software that helps you write, debug, and build your applications, with Visual Studio being the primary one.</li>
+                </ul>
+
+                <h3>3. Real-world Analogy</h3>
+                <div class="analogy">
+                    <p>The .NET Platform is like a complete <strong>Lego Universe</strong>. <br>Lego provides different themed sets (like Lego City, Lego Star Wars), which are like the runtimes (.NET Framework, .NET Core). It gives you various types of bricks (the programming languages) and instruction manuals (the class libraries). You use the Lego Digital Designer tool (like Visual Studio) to design and build anything you can imagine, from a simple car to a complex spaceship (a desktop app or a web service).</p>
+                </div>
+
+                <h3>4. Diagram / Architecture</h3>
+                <div class="ascii-diagram">
+.NET Platform (The Entire Ecosystem)
++-------------------------------------------------+
+|                                                 |
+|   +------------------+   +-------------------+  |
+|   | Languages        |   | Tools             |  |
+|   | (C#, F#, VB.NET) |   | (Visual Studio)   |  |
+|   +------------------+   +-------------------+  |
+|                                                 |
+|   +-------------------------------------------+ |
+|   | Runtimes & Libraries                      | |
+|   | +-----------------+ +-------------------+ | |
+|   | | .NET Framework  | | .NET (Core)       | | |
+|   | | (Windows-only)  | | (Cross-platform)  | | |
+|   | +-----------------+ +-------------------+ | |
+|   +-------------------------------------------+ |
+|                                                 |
++-------------------------------------------------+
+                </div>
+
+                <h3>5. Exam Orientation</h3>
+                <div class="exam-notes">
+                    <p><strong>For 10 Marks: Explain the .NET Platform.</strong><br>
+                    - **Intro:** Define .NET Platform as a comprehensive ecosystem by Microsoft for software development.<br>
+                    - **Core Pillars:** Explain its three main pillars: Runtimes, Languages, and Tools.<br>
+                    - **Runtimes:** Mention .NET Framework (legacy, Windows) and .NET (modern, cross-platform, successor to .NET Core). Explain their purpose is to execute code.<br>
+                    - **Languages:** List C#, F#, VB.NET. Mention they are all first-class citizens and compile to a common intermediate language.<br>
+                    - **Libraries:** Describe the role of the Base Class Library (BCL) as a vast set of reusable code for common tasks.<br>
+                    - **Tools:** Name Visual Studio as the primary Integrated Development Environment (IDE).<br>
+                    - **Conclusion:** Summarize that it's a unified platform for building web, mobile, desktop, cloud, and IoT applications.</p>
+                </div>
+
+                <h3>6. Practice Section</h3>
+                <div class="practice-section">
+                    <p class="font-semibold">Short Questions:</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>What are the three main components of the .NET Platform?</li>
+                        <li>Is the .NET Platform limited to only the C# language? Explain.</li>
+                    </ol>
+                    <p class="font-semibold mt-4">Coding Exercise:</p>
+                    <p>This section is theoretical. No coding exercise applies directly to the concept of the platform itself.</p>
+                </div>
+            </section>
+            
+            <section id="topic2" class="section-card">
+                <h2>What is .NET Framework?</h2>
+                
+                <h3>1. Definition/Concept</h3>
+                <p>.NET Framework is a software development framework developed by Microsoft that runs primarily on Microsoft Windows. It provides a controlled programming environment (the CLR) and a large, pre-built library of code (the FCL) to make application development easier, faster, and more secure.</p>
+
+                <h3>2. Detailed Explanation</h3>
+                <p>.NET Framework was Microsoft's original vision for the .NET platform. It is a bundle of technologies that you install on a Windows machine. Once installed, any application built with that version of the .NET Framework can run on the machine. Its main goals are:</p>
+                <ul class="list-disc list-inside ml-4 space-y-2 mt-2">
+                    <li><strong>Interoperability:</strong> Allowing code written in different languages (like C# and VB.NET) to work seamlessly together.</li>
+                    <li><strong>Common Runtime Engine:</strong> Providing a single environment (the CLR) to manage the execution of all .NET applications, handling memory, security, and exceptions.</li>
+                    <li><strong>Rich Class Library:</strong> Giving developers a huge head start with the Framework Class Library (FCL), so they don't have to write code from scratch for every little thing.</li>
+                    <li><strong>Simplified Development:</strong> Abstracting away complex, low-level operating system details, letting developers focus on business logic.</li>
+                </ul>
+                <p class="mt-2"><strong>Important Note:</strong> While still supported, the .NET Framework is now considered legacy. Microsoft's focus is on the modern, cross-platform ".NET" (which started as .NET Core).</p>
+                
+                <h3>3. Real-world Analogy</h3>
+                <div class="analogy">
+                    <p>.NET Framework is like a fully-equipped <strong>professional kitchen</strong> in a restaurant that only serves food inside its own building (Windows).<br>
+                    The kitchen has a head chef (the CLR) who manages all the operations. It's stocked with pre-made sauces, chopped vegetables, and spices (the FCL), so the cooks (developers) can quickly assemble dishes (applications). The kitchen has standard appliances and rules, ensuring every dish is cooked safely and consistently.</p>
+                </div>
+
+                <h3>4. Exam Orientation</h3>
+                <div class="exam-notes">
+                    <p><strong>For 10 Marks: Describe the .NET Framework and its purpose.</strong><br>
+                    - **Definition:** Define it as a Windows-only software framework for building and running applications.<br>
+                    - **Key Goals:** List its primary objectives: interoperability, a common runtime, a comprehensive class library, and simplified development.<br>
+                    - **Architecture:** Explain that it consists of two main components: the Common Language Runtime (CLR) and the Framework Class Library (FCL). Briefly state the function of each.<br>
+                    - **Execution Model:** Mention that it does not compile to machine code directly but to an Intermediate Language (IL), which is then handled by the CLR.<br>
+                    - **Legacy Status:** Note that it is the original .NET implementation and is now succeeded by the cross-platform .NET (Core) for new development.</p>
+                </div>
+
+                <h3>5. Practice Section</h3>
+                <div class="practice-section">
+                    <p class="font-semibold">Short Questions:</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>What are the two major components of the .NET Framework?</li>
+                        <li>On which operating system does the .NET Framework primarily run?</li>
+                    </ol>
+                    <p class="font-semibold mt-4">Coding Exercise:</p>
+                    <p>This is a conceptual topic. No coding exercise is directly applicable.</p>
+                </div>
+            </section>
+            
+            <section id="topic3" class="section-card">
+                <h2>.NET Framework, Languages, and Tools</h2>
+                
+                <h3>1. Definition/Concept</h3>
+                <p>The .NET Framework is a language-agnostic platform, meaning it supports multiple programming languages. These languages, along with powerful development tools like Visual Studio, form a cohesive environment for building applications.</p>
+
+                <h3>2. Detailed Explanation</h3>
+                <ul class="list-disc list-inside ml-4 space-y-2 mt-2">
+                    <li><strong>Languages:</strong> Microsoft officially created and supports several languages. The most prominent are:
+                        <ul>
+                            <li><strong>C# (C-Sharp):</strong> A modern, object-oriented, and type-safe language. It is the most popular and widely used language for .NET development.</li>
+                            <li><strong>F# (F-Sharp):</strong> A functional-first language that also supports object-oriented and imperative programming. It's excellent for data analysis, scientific computing, and complex algorithms.</li>
+                            <li><strong>Visual Basic .NET (VB.NET):</strong> A successor to the original Visual Basic, it features a more English-like syntax and was designed for rapid application development.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Tools:</strong>
+                        <ul>
+                            <li><strong>Visual Studio:</strong> The premier Integrated Development Environment (IDE) for .NET. It includes a code editor, debugger, designer, compiler, and much more. It's a one-stop-shop for building .NET applications.</li>
+                            <li><strong>MSBuild:</strong> The Microsoft Build Engine, which is the tool that compiles your code and packages your application. It's integrated into Visual Studio but can also be used from the command line.</li>
+                            <li><strong>NuGet:</strong> The package manager for .NET. It's a vast repository of third-party libraries that you can easily add to your project to extend its functionality.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>3. Real-world Analogy</h3>
+                <div class="analogy">
+                    <p>Imagine you're building a house. <br>
+                    The **languages (C#, F#, VB.NET)** are like different teams of specialized builders. One team is expert in bricklaying (C#), another in woodwork (F#), and another in plumbing (VB.NET). They all speak different professional "jargons" but follow the same master blueprint (the .NET standard).<br>
+                    **Visual Studio** is the master architect's office and workshop. It has all the blueprints, power tools, testing equipment, and project management boards needed to coordinate all the teams and build the house efficiently. **NuGet** is like a catalog from which you can order pre-fabricated parts, like windows or doors, instead of building them from scratch.</p>
+                </div>
+
+                <h3>4. Diagram / Architecture</h3>
+                <div class="ascii-diagram">
++-------------------------------------------------+
+| Tool: Visual Studio (IDE for everything)        |
++-------------------------------------------------+
+      |                 |                  |
+      v                 v                  v
++----------+      +----------+      +------------+
+| Language:|      | Language:|      | Language:  |
+|   C#     |      |    F#    |      |  VB.NET    |
++----------+      +----------+      +------------+
+      |                 |                  |
+      +-------+---------+------------------+
+              |
+              v
++-------------------------------------------------+
+| Common Platform: .NET Framework                 |
+| (CLR + FCL)                                     |
++-------------------------------------------------+
+| Output: Application (Web, Desktop, etc.)        |
++-------------------------------------------------+
+                </div>
+                
+                <h3>5. C# Code Example</h3>
+                <p>A simple "Hello, World!" program written in C#. This is the starting point for any C# developer.</p>
+                <pre><code>
+// This is a C# program.
+// 'System' is a namespace from the Framework Class Library.
+using System;
+
+// A class to contain our code.
+class Program
+{
+    // The Main method is the entry point of the application.
+    static void Main()
+    {
+        // Console.WriteLine is a method from the FCL to print text.
+        Console.WriteLine("Hello, World from C#!");
+    }
+}
+                </code></pre>
+
+                <h3>6. Exam Orientation</h3>
+                <div class="exam-notes">
+                    <p><strong>For 10 Marks: Discuss the languages and tools of the .NET Framework.</strong><br>
+                    - **Language Agnostic:** Start by stating that .NET is language-independent.<br>
+                    - **Languages:** Detail the main languages: C# (primary, object-oriented), F# (functional-first), and VB.NET (RAD, English-like syntax). Explain that they all compile to a common Intermediate Language (IL).<br>
+                    - **Tools:** Focus on Visual Studio as the primary IDE. Describe its key features: code editor, debugger, UI designer, and integration with MSBuild.<br>
+                    - **Package Management:** Mention NuGet and its role in managing external libraries, simplifying dependency management.<br>
+                    - **Synergy:** Conclude by explaining how these components work together to provide a productive development experience.</p>
+                </div>
+
+                <h3>7. Practice Section</h3>
+                <div class="practice-section">
+                    <p class="font-semibold">Short Questions:</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>What is the primary IDE for .NET development?</li>
+                        <li>What does it mean that the .NET Framework is "language-agnostic"?</li>
+                    </ol>
+                    <p class="font-semibold mt-4">Coding Exercise:</p>
+                    <p>Write a simple C# console application that declares an integer variable and a string variable, assigns them values, and then prints them to the console in a single sentence.</p>
+                </div>
+            </section>
+
+            <section id="topic4" class="section-card">
+                <h2>.NET Framework Major Components</h2>
+
+                <h3>1. Definition/Concept</h3>
+                <p>The .NET Framework is primarily composed of two major components: the <strong>Common Language Runtime (CLR)</strong> and the <strong>Framework Class Library (FCL)</strong>. These two work together to provide the execution environment and development foundation for all .NET applications.</p>
+
+                <h3>2. Detailed Explanation</h3>
+                <ul>
+                    <li class="mb-4">
+                        <strong>1. Common Language Runtime (CLR):</strong> This is the heart or the "engine" of the .NET Framework. It's the execution environment that manages the application while it's running. It handles critical tasks like:
+                        <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                            <li><strong>Memory Management:</strong> Automatically allocating and freeing up memory through a process called Garbage Collection (GC).</li>
+                            <li><strong>Security:</strong> Enforcing security permissions (Code Access Security - CAS).</li>
+                            <li><strong>Exception Handling:</strong> Providing a structured way to handle errors that occur during runtime.</li>
+                            <li><strong>JIT Compilation:</strong> Converting the intermediate code into native machine code that the processor can execute.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>2. Framework Class Library (FCL):</strong> This is a vast, standard library of reusable classes, interfaces, and data types. It's a huge collection of pre-written code that you can use in your applications. It's organized into namespaces.
+                        <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                            <li>The FCL includes functionality for everything from reading/writing files, database access, graphics, web development, and network communication.</li>
+                            <li>A core part of the FCL is the <strong>Base Class Library (BCL)</strong>, which provides the most fundamental types and functions (like strings, integers, file I/O, etc.). Often, FCL and BCL are used interchangeably.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>3. Real-world Analogy</h3>
+                <div class="analogy">
+                    <p>Imagine you are building a car. <br>
+                    The <strong>CLR</strong> is the <strong>car's engine, chassis, and safety systems</strong> combined. It's the core that makes the car run. It manages fuel (memory), ensures the car doesn't fall apart (type safety), and deploys airbags in a crash (exception handling). You don't interact with it directly, but it's essential for the car to function.<br>
+                    The <strong>FCL</strong> is like a massive <strong>auto parts warehouse</strong>. Need a steering wheel, tires, radio, or air conditioning unit? You don't build them from scratch. You just go to the warehouse (FCL), pick the part you need (a class), and install it in your car. This makes building the car incredibly fast and reliable.</p>
+                </div>
+
+                <h3>4. Diagram / Architecture</h3>
+                <div class="ascii-diagram">
+Your Application (C#, VB.NET Code)
++-------------------------------------------+
+|                                           |
+|       Framework Class Library (FCL)       |
+|   (The "Toolbox" of reusable code)        |
+| +---------------------------------------+ |
+| | BCL, ADO.NET, ASP.NET, WPF, WinForms  | |
+| +---------------------------------------+ |
+|                                           |
++-------------------------------------------+
+|                                           |
+|      Common Language Runtime (CLR)        |
+|   (The "Engine" that runs your code)      |
+| +---------------------------------------+ |
+| | JIT Compiler, Garbage Collector (GC), | |
+| |   Security, Exception Handling        | |
+| +---------------------------------------+ |
+|                                           |
++-------------------------------------------+
+|                                           |
+|             Operating System              |
+|               (Windows)                   |
++-------------------------------------------+
+                </div>
+                
+                <h3>5. Exam Orientation</h3>
+                <div class="exam-notes">
+                    <p><strong>For 10 Marks: Explain the major components of the .NET Framework.</strong><br>
+                    - **Introduction:** State the two main components are the CLR and FCL.<br>
+                    - **CLR (Common Language Runtime):**
+                        - Define it as the execution engine/virtual machine of .NET.
+                        - List its key responsibilities: Memory Management (Garbage Collection), JIT Compilation, Security (CAS), and Exception Handling.
+                        - Explain that it's the component that makes .NET language-agnostic by running a common intermediate language.<br>
+                    - **FCL (Framework Class Library):**
+                        - Define it as a comprehensive library of reusable code.
+                        - Mention it's organized into namespaces.
+                        - Provide examples of its capabilities: database access (ADO.NET), web development (ASP.NET), file I/O, etc.
+                        - Explain the relationship with BCL (Base Class Library) as the core part of FCL.<br>
+                    - **Conclusion:** Emphasize that the CLR provides the runtime environment while the FCL provides the development tools, and together they form the framework.</p>
+                </div>
+
+                <h3>6. Practice Section</h3>
+                <div class="practice-section">
+                    <p class="font-semibold">Short Questions:</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>What is the role of the Garbage Collector (GC) in the CLR?</li>
+                        <li>What is the difference between the FCL and the BCL?</li>
+                    </ol>
+                     <p class="font-semibold mt-4">Coding Exercise:</p>
+                    <p>Write a C# program that uses the `System.IO.File` class (part of the FCL/BCL) to create a new text file named `test.txt`, write a line of text to it, and then read that line back and print it to the console.</p>
+                </div>
+            </section>
+            
+            <section id="topic5" class="section-card">
+                <h2>Common Language Runtime (CLR)</h2>
+
+                <h3>1. Definition/Concept</h3>
+                <p>The Common Language Runtime (CLR) is the virtual machine component and execution engine of the .NET Framework. It is responsible for managing the execution of .NET programs, providing core services like memory management, type safety, and exception handling, and converting intermediate language code into native code.</p>
+
+                <h3>2. Detailed Explanation</h3>
+                <p>The CLR is arguably the most important part of the .NET Framework. When you run a .NET application, the CLR takes over. Here's a breakdown of its key services:</p>
+                <ul class="list-disc list-inside ml-4 space-y-3 mt-2">
+                    <li><strong>JIT (Just-In-Time) Compilation:</strong> .NET code is not compiled to code that a processor can understand directly. It's first compiled into Microsoft Intermediate Language (MSIL or IL). When a method is called for the first time, the CLR's JIT compiler converts the IL for that method into native machine code. This compiled code is then cached, so subsequent calls are faster.</li>
+                    <li><strong>Garbage Collection (GC):</strong> The GC is the CLR's automatic memory manager. It keeps track of all objects your application creates. When an object is no longer referenced or needed, the GC automatically reclaims the memory, preventing memory leaks and relieving the developer from manual memory management.</li>
+                    <li><strong>Code Access Security (CAS):</strong> The CLR has a security system that can grant or deny permissions to code based on its origin (e.g., from the local machine, intranet, or internet) and identity. This helps prevent malicious code from doing harm. (Note: CAS is less prominent in modern .NET Core).</li>
+                    <li><strong>Type Safety Verification:</strong> The CLR ensures that code is "type-safe," meaning it prevents objects from accessing memory that they are not authorized to access. This prevents common bugs and security vulnerabilities.</li>
+                    <li><strong>Exception Handling:</strong> Provides a robust and structured way to handle errors that occur while the program is running.</li>
+                </ul>
+
+                <h3>3. Real-world Analogy</h3>
+                <div class="analogy">
+                    <p>The CLR is like a highly skilled and strict <strong>Event Manager</strong> for a large conference.<br>
+                    - The conference schedule (your IL code) is written in a general format. When a speaker is about to go on stage, the manager gives them final, specific instructions for that very stage (<strong>JIT Compilation</strong>).<br>
+                    - The manager hands out and collects access badges (allocates and manages memory). After a talk is over, the manager's cleaning crew cleans the room and makes it ready for the next speaker (<strong>Garbage Collection</strong>).<br>
+                    - The manager checks everyone's credentials at the door to make sure they are allowed in certain areas (<strong>Security</strong>).<br>
+                    - If a projector fails or a speaker gets sick, the manager has a contingency plan to handle the situation smoothly without shutting down the whole conference (<strong>Exception Handling</strong>).</p>
+                </div>
+
+                <h3>4. Exam Orientation</h3>
+                <div class="exam-notes">
+                    <p><strong>For 10 Marks: What is the CLR? Explain its major functions.</strong><br>
+                    - **Definition:** Define the CLR as the virtual machine/execution engine of .NET.<br>
+                    - **Core Purpose:** Explain its role is to manage the execution of .NET code.<br>
+                    - **Key Functions (Detail each):**
+                        - **JIT Compilation:** Describe the process: IL code -> JIT compiler -> Native Code. Mention the benefit of caching compiled code.
+                        - **Garbage Collection (GC):** Explain automatic memory management. Mention how it prevents memory leaks.
+                        - **Type Safety:** Describe how the CLR verifies code to ensure it only accesses authorized memory, enhancing stability and security.
+                        - **Security (CAS):** Briefly explain its role in enforcing permissions.
+                        - **Exception Handling:** Note its role in providing a structured error-handling mechanism.<br>
+                    - **Conclusion:** Summarize that the CLR provides a managed, robust, and secure environment for .NET applications.</p>
+                </div>
+
+                <h3>5. Practice Section</h3>
+                <div class="practice-section">
+                    <p class="font-semibold">Short Questions:</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>What does "Just-In-Time" (JIT) compilation mean?</li>
+                        <li>Who is responsible for memory management in a .NET application, the developer or the CLR? Why?</li>
+                    </ol>
+                    <p class="font-semibold mt-4">Coding Exercise:</p>
+                    <p>Write a C# program that intentionally causes a `DivideByZeroException`. Use a `try-catch` block (a feature managed by the CLR's exception handling) to catch the error and print a friendly message to the console instead of letting the program crash.</p>
+                </div>
+            </section>
+            
+            <section id="topic6" class="section-card">
+                <h2>Compilation and Execution in .NET</h2>
+                
+                <h3>1. Definition/Concept</h3>
+                <p>The process of turning source code (like C#) into an executable program in .NET is a two-step process. First, the source code is compiled into an Intermediate Language (IL). Second, when the program is run, the Common Language Runtime (CLR) compiles this IL into native machine code just-in-time for execution.</p>
+
+                <h3>2. Detailed Explanation</h3>
+                <p>Here is the step-by-step flow:</p>
+                <ol class="list-decimal list-inside ml-4 space-y-3 mt-2">
+                    <li><strong>Writing Source Code:</strong> You, the developer, write code in a .NET language like C#. For example, `MyProgram.cs`.</li>
+                    <li><strong>Compilation to IL:</strong> You use a language-specific compiler (e.g., the C# compiler, `csc.exe`) to compile your source code. This compilation does <strong>not</strong> produce machine code. Instead, it produces a file containing <strong>Microsoft Intermediate Language (MSIL or IL)</strong> and metadata. This file is typically a `.exe` or `.dll` and is called an "assembly".</li>
+                    <li><strong>Executing the Assembly:</strong> When you run the program (e.g., by double-clicking the `.exe`), the Windows loader sees that it's a .NET assembly and hands it over to the .NET CLR.</li>
+                    <li><strong>JIT Compilation by CLR:</strong> The CLR takes over. When a specific method in your code needs to be executed for the first time, the CLR's <strong>Just-In-Time (JIT) compiler</strong> translates the IL code for that method into native machine code that is specific to the computer's architecture (e.g., x86, x64).</li>
+                    <li><strong>Execution of Native Code:</strong> The processor on the computer now executes this native code. The JIT-compiled native code is cached, so if the same method is called again, the CLR reuses the cached native code without needing to recompile the IL, making subsequent calls very fast.</li>
+                </ol>
+
+                <h3>3. Real-world Analogy</h3>
+                <div class="analogy">
+                    <p>Imagine you write a recipe in English (<strong>C# source code</strong>).<br>
+                    - You give this recipe to a translator who converts it into a universal, simplified "chef's shorthand" that any professional chef can understand (<strong>compiling to IL</strong>). This shorthand recipe is printed and put in a cookbook (the <strong>assembly</strong>).<br>
+                    - A customer orders this dish at a restaurant in Paris. The French head chef (the <strong>CLR</strong>) opens the cookbook.<br>
+                    - For each step, just before cooking it, the head chef translates the "chef's shorthand" into French and gives the instruction to the line cooks (<strong>JIT compilation to native code</strong>). The cooks then execute the instruction.<br>
+                    - If another customer orders the same dish, the head chef remembers the French translation and doesn't need to re-translate from the shorthand, making the process faster.
+                    </p>
+                </div>
+
+                <h3>4. Diagram / Architecture</h3>
+                <div class="text-center my-4">
+                    <div id="compilation-diagram" class="space-y-4">
+                        <div class="compilation-step bg-white p-4 border rounded-lg shadow-sm">
+                            <p class="font-bold text-lg">1. C# Source Code</p>
+                            <p class="text-sm text-gray-600">(`Program.cs`)</p>
+                        </div>
+                        <div class="compilation-step text-2xl font-bold text-blue-500">↓</div>
+                        <div class="compilation-step bg-blue-100 p-2 rounded-full inline-block">
+                            <p class="font-semibold">C# Compiler</p>
+                        </div>
+                        <div class="compilation-step text-2xl font-bold text-blue-500">↓</div>
+                        <div class="compilation-step bg-white p-4 border rounded-lg shadow-sm">
+                            <p class="font-bold text-lg">2. Assembly (IL + Metadata)</p>
+                            <p class="text-sm text-gray-600">(`Program.exe`)</p>
+                        </div>
+                        <div class="compilation-step text-2xl font-bold text-green-500">↓</div>
+                        <div class="compilation-step bg-green-100 p-2 rounded-full inline-block">
+                            <p class="font-semibold">CLR (JIT Compiler)</p>
+                        </div>
+                        <div class="compilation-step text-2xl font-bold text-green-500">↓</div>
+                        <div class="compilation-step bg-white p-4 border rounded-lg shadow-sm">
+                            <p class="font-bold text-lg">3. Native Machine Code</p>
+                            <p class="text-sm text-gray-600">(Executed by CPU)</p>
+                        </div>
+                    </div>
+                    <button id="animate-btn" class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">Animate Process</button>
+                </div>
+
+                <h3>5. Exam Orientation</h3>
+                <div class="exam-notes">
+                    <p><strong>For 10 Marks: Describe the compilation and execution process in .NET.</strong><br>
+                    - **Two-Step Process:** Start by stating it's a two-stage process.<br>
+                    - **Stage 1: Source Code to IL:**
+                        - Explain that source code (C#, VB.NET) is compiled by a language-specific compiler.
+                        - State the output is not native code but an assembly containing MSIL (or IL) and metadata.
+                        - Define an assembly as a .exe or .dll file.<br>
+                    - **Stage 2: Execution by CLR:**
+                        - Explain that when the assembly is run, the CLR takes over.
+                        - Describe JIT compilation: The CLR's JIT compiler converts IL to native machine code on-demand, method by method.
+                        - Mention the performance benefit of caching the native code for subsequent calls.<br>
+                    - **Diagram:** Draw a simple block diagram showing: C# Code -> C# Compiler -> IL Assembly -> CLR (JIT) -> Native Code -> CPU.</p>
+                </div>
+
+                <h3>6. Practice Section</h3>
+                <div class="practice-section">
+                    <p class="font-semibold">Short Questions:</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>What is MSIL?</li>
+                        <li>What component is responsible for converting IL to native code?</li>
+                    </ol>
+                    <p class="font-semibold mt-4">Coding Exercise:</p>
+                    <p>Create a C# console application with a `Main` method and a separate method called `SayHello()`. Call `SayHello()` from `Main`. Understand that when you run the program, the IL for `Main` is JIT-compiled first, and only when `SayHello()` is called is its IL then JIT-compiled.</p>
+                </div>
+            </section>
+            
+            <section id="topic7" class="section-card">
+                <h2>Understand the .NET Framework 4.6 stack</h2>
+
+                <h3>1. Definition/Concept</h3>
+                <p>The .NET Framework stack is a layered architecture showing how different technologies and application models are built on top of the core components (CLR and BCL). It illustrates that developers typically work with higher-level frameworks like ASP.NET or WPF, which in turn rely on the foundational layers.</p>
+
+                <h3>2. Detailed Explanation</h3>
+                <p>The stack can be visualized as a set of building blocks, from the most fundamental at the bottom to the most specialized at the top.</p>
+                <ul class="list-disc list-inside ml-4 space-y-3 mt-2">
+                    <li><strong>Layer 1: Common Language Runtime (CLR) & Operating System:</strong> The absolute foundation. The CLR runs on top of the Windows OS and manages the entire execution process.</li>
+                    <li><strong>Layer 2: Base Class Library (BCL):</strong> The next layer provides fundamental types and functionalities. This includes collections, file I/O, string manipulation, etc. All other layers depend on the BCL.</li>
+                    <li><strong>Layer 3: Data and XML:</strong> This layer contains technologies for data access and manipulation.
+                        <ul>
+                            <li><strong>ADO.NET:</strong> For connecting to databases like SQL Server.</li>
+                            <li><strong>LINQ (Language-Integrated Query):</strong> For querying data from various sources directly in C#.</li>
+                            <li><strong>XML Libraries:</strong> For working with XML data.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Layer 4: Application Models:</strong> This is the layer developers interact with most directly to build the user-facing part of their application. .NET Framework 4.6 provided several models:
+                        <ul>
+                            <li><strong>Windows Presentation Foundation (WPF):</strong> For building modern desktop applications with rich user interfaces.</li>
+                            <li><strong>Windows Forms (WinForms):</strong> An older, established framework for building traditional desktop applications.</li>
+                            <li><strong>ASP.NET:</strong> A comprehensive framework for building dynamic websites, web applications, and web services. This itself had sub-frameworks like Web Forms and MVC.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Layer 5: Languages & Tools:</strong> Overarching everything are the languages (C#, VB.NET) and tools (Visual Studio) used to build applications using any of the models below.</li>
+                </ul>
+
+                <h3>3. Diagram / Architecture</h3>
+                <div class="ascii-diagram" style="text-align: left; padding: 2rem;">
+   +---------------------------------------------+
+   |        Languages (C#, VB.NET) & Tools (VS)        |
+   +---------------------------------------------+
+   |            Application Models               |
+   | +-----------+  +-----------+  +-----------+ |
+   | |   WPF     |  | WinForms  |  |  ASP.NET  | |
+   | +-----------+  +-----------+  +-----------+ |
+   +---------------------------------------------+
+   |           Data Access & XML                 |
+   | +-----------+  +-----------+  +-----------+ |
+   | |  ADO.NET  |  |   LINQ    |  |    XML    | |
+   | +-----------+  +-----------+  +-----------+ |
+   +---------------------------------------------+
+   |        Base Class Library (BCL)             |
+   +---------------------------------------------+
+   |       Common Language Runtime (CLR)         |
+   +---------------------------------------------+
+   |           Operating System (Windows)        |
+   +---------------------------------------------+
+                </div>
+
+                <h3>4. Exam Orientation</h3>
+                <div class="exam-notes">
+                    <p><strong>For 10 Marks: Draw and explain the .NET Framework 4.6 stack.</strong><br>
+                    - **Diagram:** Draw the layered architecture as shown above.<br>
+                    - **Explanation of Layers (Bottom-Up):**
+                        - **OS/CLR:** Start with the foundation, explaining the CLR as the execution engine.
+                        - **BCL:** Describe it as the core library providing fundamental types.
+                        - **Data/XML:** Explain this layer's purpose for data access, mentioning ADO.NET and LINQ.
+                        - **Application Models:** Describe the purpose of this layer and give examples: WPF/WinForms for desktop and ASP.NET for web.
+                        - **Languages/Tools:** Explain that these are used across all layers to build the applications.<br>
+                    - **Conclusion:** Summarize that the layered architecture allows for separation of concerns and builds powerful application models on a robust and common foundation.</p>
+                </div>
+
+                <h3>5. Practice Section</h3>
+                <div class="practice-section">
+                    <p class="font-semibold">Short Questions:</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>Which application model would you use to build a desktop application in .NET Framework 4.6? (Name two).</li>
+                        <li>Which layer in the stack is responsible for database communication?</li>
+                    </ol>
+                    <p class="font-semibold mt-4">Coding Exercise:</p>
+                    <p>This is a theoretical topic. No specific coding exercise is applicable, but any code you write (e.g., a simple console app) implicitly uses the CLR and BCL layers of the stack.</p>
+                </div>
+            </section>
+            
+            <section id="topic8" class="section-card">
+                <h2>Introduction to .NET Core</h2>
+
+                <h3>1. Definition/Concept</h3>
+                <p>.NET Core is the modern, open-source, and cross-platform successor to the .NET Framework. It was redesigned from the ground up to be lightweight, modular, and high-performance, enabling developers to build applications that run on Windows, macOS, and Linux.</p>
+                <p class="mt-2 font-semibold">Note: Starting with version 5, ".NET Core" and ".NET Framework" were unified into a single platform simply called ".NET". So, .NET Core 3.1 was followed by .NET 5, .NET 6, etc. We now refer to the modern version as just ".NET".</p>
+
+                <h3>2. Detailed Explanation</h3>
+                <p>Microsoft created .NET Core to address the limitations of the .NET Framework, primarily its dependency on Windows. Key characteristics of .NET Core include:</p>
+                <ul class="list-disc list-inside ml-4 space-y-3 mt-2">
+                    <li><strong>Cross-Platform:</strong> This is its biggest feature. You can develop and run .NET Core applications on Windows, macOS, and various Linux distributions.</li>
+                    <li><strong>Open Source:</strong> The source code for .NET Core is available on GitHub, and it's developed with contributions from the community, promoting transparency and faster innovation.</li>
+                    <li><strong>High Performance:</strong> Significant engineering effort was put into making .NET Core much faster and more memory-efficient than the .NET Framework.</li>
+                    <li><strong>Modular & Lightweight:</strong> Applications only include the libraries they actually need (via NuGet), resulting in smaller application sizes. This is crucial for microservices and containerized deployments (like Docker).</li>
+                    <li><strong>Command-Line Interface (CLI):</strong> Comes with a powerful CLI (`dotnet`) that allows you to create, build, run, and publish applications without needing a full IDE like Visual Studio.</li>
+                    <li><strong>Unified Platform:</strong> Supports building web apps (ASP.NET Core), APIs, console apps, and since the unification in .NET 5+, desktop apps as well.</li>
+                </ul>
+                
+                <h3>3. Real-world Analogy</h3>
+                <div class="analogy">
+                    <p>If .NET Framework is a traditional, large <strong>restaurant kitchen</strong> built into a specific building (Windows), then .NET Core is a modern, high-tech <strong>mobile food truck</strong>.<br>
+                    - It can operate anywhere: in a city park (Linux), at a beach (macOS), or in a business district (Windows) (<strong>Cross-Platform</strong>).<br>
+                    - Its design plans are public, and other chefs can suggest improvements (<strong>Open Source</strong>).<br>
+                    - It's designed to be fast and efficient, serving customers quickly with minimal waste (<strong>High Performance</strong>).<br>
+                    - You only stock the ingredients you need for today's menu, keeping it light and nimble (<strong>Modular & Lightweight</strong>).
+                    </p>
+                </div>
+
+                <h3>4. .NET Framework vs. .NET Core (Now .NET)</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse mt-4">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border p-3 font-semibold">Feature</th>
+                                <th class="border p-3 font-semibold">.NET Framework</th>
+                                <th class="border p-3 font-semibold">.NET (Core)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border p-3">Operating System</td>
+                                <td class="border p-3">Windows only</td>
+                                <td class="border p-3">Windows, macOS, Linux</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-3">Source Model</td>
+                                <td class="border p-3">Proprietary (Source available, but not open for contribution)</td>
+                                <td class="border p-3">Open Source (on GitHub)</td>
+                            </tr>
+                             <tr>
+                                <td class="border p-3">Performance</td>
+                                <td class="border p-3">Good</td>
+                                <td class="border p-3">Excellent, highly optimized</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-3">Installation</td>
+                                <td class="border p-3">Installed machine-wide</td>
+                                <td class="border p-3">Can be bundled with the app (self-contained) or installed side-by-side</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-3">Best for</td>
+                                <td class="border p-3">Maintaining existing Windows desktop apps (WPF, WinForms)</td>
+                                <td class="border p-3">All new applications, especially web APIs, microservices, and cross-platform apps</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>5. Exam Orientation</h3>
+                <div class="exam-notes">
+                    <p><strong>For 10 Marks: What is .NET Core? How does it differ from the .NET Framework?</strong><br>
+                    - **Definition:** Define .NET Core as the modern, cross-platform, open-source successor to .NET Framework.<br>
+                    - **Key Features:** List its main characteristics: Cross-platform (Windows, macOS, Linux), Open Source, High Performance, and Modular.<br>
+                    - **Comparison Table:** Create a table comparing .NET Framework and .NET Core on key aspects:
+                        - Platform Support (Windows vs. Cross-platform)
+                        - Source Model (Proprietary vs. Open Source)
+                        - Performance (Good vs. Excellent)
+                        - Use Case (Legacy Windows apps vs. All new development)<br>
+                    - **Unification:** Mention that starting with .NET 5, it is now the single, unified ".NET" platform, representing the future of .NET development.</p>
+                </div>
+
+                <h3>6. Practice Section</h3>
+                <div class="practice-section">
+                    <p class="font-semibold">Short Questions:</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>What is the single biggest advantage of .NET Core over .NET Framework?</li>
+                        <li>Is .NET Core still the name for the modern .NET platform? Explain.</li>
+                    </ol>
+                    <p class="font-semibold mt-4">Coding Exercise:</p>
+                    <p>If you have the .NET SDK installed, open a command prompt or terminal, and run the command `dotnet new console -o MyFirstCoreApp`. Then `cd MyFirstCoreApp` and run `dotnet run`. This simple exercise demonstrates using the .NET CLI, a key feature of the modern .NET platform.</p>
+                </div>
+            </section>
+            
+            <section class="section-card" id="gemini-tools">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold">Interactive Learning Assistant powered by Gemini API</h2>
+                    <p class="text-gray-600 mt-2">Get instant answers and code explanations to help you master C# and .NET concepts.</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
+                    <!-- Q&A Section -->
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-xl font-bold mb-4">Ask a Question ✨</h3>
+                        <div class="mb-4">
+                            <textarea id="qa-input" class="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" rows="4" placeholder="e.g., What are the main advantages of using a managed language like C#?"></textarea>
+                        </div>
+                        <button id="qa-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">Ask Gemini ✨</button>
+                        <div id="qa-loading" class="mt-4 text-center hidden">
+                            <p class="text-gray-500">Thinking...</p>
+                        </div>
+                        <div id="qa-output" class="mt-4 bg-gray-100 p-4 rounded-lg border">
+                            <p class="text-gray-600">Your answer will appear here.</p>
+                        </div>
+                    </div>
+
+                    <!-- Code Explainer Section -->
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-xl font-bold mb-4">Explain Code ✨</h3>
+                        <div class="mb-4">
+                            <textarea id="code-input" class="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-shadow" rows="4" placeholder="Paste your C# code here. e.g., &#10;Console.WriteLine(&quot;Hello, World!&quot;);"></textarea>
+                        </div>
+                        <button id="code-button" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">Explain Code ✨</button>
+                        <div id="code-loading" class="mt-4 text-center hidden">
+                            <p class="text-gray-500">Analyzing code...</p>
+                        </div>
+                        <div id="code-output" class="mt-4 bg-gray-100 p-4 rounded-lg border">
+                            <p class="text-gray-600">The explanation will be here.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const toggleButton = document.querySelector('.menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const contentWrapper = document.getElementById('content-wrapper');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            contentWrapper.classList.toggle('shift');
+        });
+
+        document.querySelectorAll('.sidebar ul li a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 1024) {
+                    sidebar.classList.remove('active');
+                    contentWrapper.classList.remove('shift');
+                }
+            });
+        });
+
+        const animateBtn = document.getElementById('animate-btn');
+        const compilationSteps = document.querySelectorAll('#compilation-diagram .compilation-step');
+        
+        const animateCompilation = () => {
+            compilationSteps.forEach(step => {
+                step.classList.remove('visible');
+            });
+            
+            let delay = 0;
+            compilationSteps.forEach(step => {
+                setTimeout(() => {
+                    step.classList.add('visible');
+                }, delay);
+                delay += 300;
+            });
+        };
+        
+        if (animateBtn) {
+            animateBtn.addEventListener('click', animateCompilation);
+        }
+
+        const qaInput = document.getElementById('qa-input');
+        const qaButton = document.getElementById('qa-button');
+        const qaLoading = document.getElementById('qa-loading');
+        const qaOutput = document.getElementById('qa-output');
+        
+        const codeInput = document.getElementById('code-input');
+        const codeButton = document.getElementById('code-button');
+        const codeLoading = document.getElementById('code-loading');
+        const codeOutput = document.getElementById('code-output');
+
+        const apiKey = ""; 
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        const callApi = async (prompt, outputElement, loadingElement) => {
+            outputElement.innerHTML = `<p class="text-gray-600">Your answer will appear here.</p>`;
+            loadingElement.classList.remove('hidden');
+            
+            const systemPrompt = "Act as an expert teacher for the subject 'DOT NET Programming using C#'. Your tone should be easy-to-understand, beginner-friendly, and highly accurate. Provide concise and clear explanations. Your responses should be focused on the topics within the .NET Framework and C# syllabus provided.";
+
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            let retries = 0;
+            const maxRetries = 5;
+
+            const fetchData = async () => {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429 && retries < maxRetries) {
+                            retries++;
+                            const delay = Math.pow(2, retries) * 1000;
+                            await new Promise(res => setTimeout(res, delay));
+                            return fetchData();
+                        } else {
+                            throw new Error(`API call failed with status: ${response.status}`);
+                        }
+                    }
+
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate a response. Please try again.";
+                    outputElement.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+                } catch (error) {
+                    console.error("API error:", error);
+                    outputElement.innerHTML = `<p class="text-red-500">Error: Unable to connect to the assistant. Please try again later.</p>`;
+                } finally {
+                    loadingElement.classList.add('hidden');
+                }
+            };
+
+            fetchData();
+        };
+        
+        if (qaButton) {
+            qaButton.addEventListener('click', () => {
+                const prompt = qaInput.value;
+                if (prompt.trim() === '') {
+                    qaOutput.innerHTML = `<p class="text-red-500">Please enter a question to ask.</p>`;
+                    return;
+                }
+                const fullPrompt = `Answer the following question about .NET or C#: "${prompt}"`;
+                callApi(fullPrompt, qaOutput, qaLoading);
+            });
+        }
+        
+        if (codeButton) {
+            codeButton.addEventListener('click', () => {
+                const code = codeInput.value;
+                if (code.trim() === '') {
+                    codeOutput.innerHTML = `<p class="text-red-500">Please paste some C# code to explain.</p>`;
+                    return;
+                }
+                const fullPrompt = `Explain what this C# code does in a simple, beginner-friendly way:\n\n\`\`\`csharp\n${code}\n\`\`\``;
+                callApi(fullPrompt, codeOutput, codeLoading);
+            });
+        }
+        
+    </script>
+</body>
+</html>
