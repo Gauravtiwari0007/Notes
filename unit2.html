@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOT NET Programming using C# - A Beginner's Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #2c3e50;
+        }
+        .section-card {
+            background-color: #FFFFFF;
+            border: 1px solid #EAEAEA;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        h1, h2, h3, h4 {
+            color: #192a56;
+        }
+        h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        pre {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .analogy, .exam-notes, .practice-section {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .analogy {
+            background-color: #e8f6fd;
+            border: 1px solid #b6e0f5;
+        }
+        .exam-notes {
+            background-color: #fdf5e6;
+            border: 1px solid #f6d5a3;
+        }
+        .practice-section {
+            background-color: #f4fdf6;
+            border: 1px solid #c4e9cd;
+        }
+        /* Sidebar */
+        .sidebar {
+            background-color: #2c3e50;
+            color: #fff;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+        .sidebar h2 {
+            color: #fff;
+            border-bottom: 1px solid #1abc9c;
+            margin: 1rem;
+            padding-bottom: 0.5rem;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar ul li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar ul li a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #1abc9c;
+        }
+        .menu-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: #1abc9c;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        @media (min-width: 1024px) {
+            .sidebar {
+                left: 0;
+            }
+            .menu-toggle {
+                display: none;
+            }
+            .content-wrapper {
+                margin-left: 250px;
+            }
+        }
+         /* ------- Dark mode styles ------- */
+        body.dark-mode {
+            background-color: #181A20 !important;
+            color: #ECECEC !important;
+        }
+        body.dark-mode .section-card {
+            background-color: #23272F !important;
+            border-color: #2C2F37 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+        }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4 {
+            color: #F1C40F !important;
+        }
+        body.dark-mode h2 {
+            border-bottom: 2px solid #81c9fa !important;
+        }
+        body.dark-mode .analogy {
+            background-color: #16222e !important;
+            border-color: #295B7A !important;
+        }
+        body.dark-mode .exam-notes {
+            background-color: #363125 !important;
+            border-color: #7d631b !important;
+        }
+        body.dark-mode .practice-section {
+            background-color: #153d2b !important;
+            border-color: #257a4b !important;
+        }
+        body.dark-mode .sidebar {
+            background-color: #101217 !important;
+            color: #fff !important;
+        }
+        body.dark-mode .sidebar h2 {
+            color: #F1C40F !important;
+            border-bottom: 1px solid #81c9fa !important;
+        }
+        body.dark-mode .sidebar ul li a:hover {
+            background-color: #0F6656 !important;
+        }
+        body.dark-mode pre {
+            background-color: #191a23 !important;
+            color: #eee !important;
+        }
+        body.dark-mode .ascii-diagram {
+            background-color: #23272F !important;
+            border-color: #345a85 !important;
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle">☰</button>
+    <div class="sidebar" id="sidebar">
+        <h2>Index</h2>
+        <ul>
+            <li><a href="#features">Features of C#</a></li>
+            <li><a href="#compilation">C# Compilation and Execution</a></li>
+            <li><a href="#structure">General Structure of a C# Program</a></li>
+            <li><a href="#dll">Creating and Using a DLL</a></li>
+            <li><a href="#datatypes">Data Types in C#</a></li>
+            <li><a href="#valueref">Value Types and Reference Types</a></li>
+            <li><a href="#boxing">Boxing and UnBoxing</a></li>
+            <li><a href="#arrays">Arrays</a></li>
+            <li><a href="#nullable">Nullable Types</a></li>
+            <li><a href="#implicit">Implicitly Typed Local Variables</a></li>
+            <li><a href="#vardynamic">Var vs dynamic</a></li>
+            <li><a href="#isas">Is and As Operator</a></li>
+            <li><a href="#refout">Ref vs out keywords</a></li>
+            <li><a href="#object">The ‘object’ base class in .Net</a></li>
+            <li><a href="#equals">Equals() vs ==</a></li>
+            <li><a href="#string-sb">String vs StringBuilder</a></li>
+            <li><a href="#string-methods">Various String class methods</a></li>
+            <li><a href="#params">Default & Named parameters</a></li>
+            <li><a href="#parsetryparse">Parse() vs TryParse() vs Convert</a></li>
+            <li><a href="index.html">Unit-1</a></li>
+        </ul>
+    </div>
+    <!-- Dark mode toggle button -->
+    <button id="darkModeToggle" style="position:fixed;top:1rem;right:1rem;z-index:1200;background:#292929;color:#fff;font-size:1rem;padding:0.5rem 1.2rem;border:none;border-radius:8px;cursor:pointer;">
+        🌙 Dark Mode
+    </button>
+
+    <!-- Your existing content follows ... -->
+
+    <button class="menu-toggle">☰</button>
+    <div class="sidebar" id="sidebar">
+        <!-- ... -->
+    </div>
+    <div class="content-wrapper" id="content-wrapper">
+        <!-- ... -->
+    </div>
+    <!-- ...rest of your HTML... -->
+
+    <div class="content-wrapper p-6">
+        <h1 class="text-3xl font-bold mb-6">DOT NET Programming using C# - Beginner’s Guide</h1>
+
+        <!-- ================== 1. Features ================== -->
+        <section id="features" class="section-card">
+            <h2>Features of C#</h2>
+            <h3>Definition</h3>
+            <p>C# is a modern, object-oriented, type-safe programming language developed by Microsoft for the .NET platform.</p>
+            <h3>Explanation</h3>
+            <p>Some features include:</p>
+            <ul class="list-disc list-inside">
+                <li>Simple and easy to learn</li>
+                <li>Object-Oriented</li>
+                <li>Type-Safe (prevents type errors)</li>
+                <li>Rich Standard Library</li>
+                <li>Automatic Memory Management (Garbage Collection)</li>
+                <li>Cross-platform support</li>
+            </ul>
+            <div class="analogy"><b>Analogy:</b> Think of C# as a “Swiss Army Knife” for developers – it has tools for almost every situation, neatly organized.</div>
+            <pre><code>// Example: Simple Hello World in C#
+using System;
+class Program {
+    static void Main() {
+        Console.WriteLine("Hello, World!");
+    }
+}</code></pre>
+            <div class="exam-notes"><b>Exam Notes:</b> Key features are simplicity, OOP, type-safety, garbage collection, interoperability, and scalability.</div>
+            <div class="practice-section">
+                <b>Practice:</b>
+                <ul>
+                    <li>Q1: List any 4 features of C#.</li>
+                    <li>Q2: Why is C# called type-safe?</li>
+                </ul>
+                <b>Coding Exercise:</b> Write a program that prints your name and age using C#.
+            </div>
+        </section>
+
+        <!-- ================== 2. Compilation ================== -->
+        <section id="compilation" class="section-card">
+            <h2>C# Compilation and Execution</h2>
+            <h3>Definition</h3>
+            <p>Compilation is the process of converting source code into Intermediate Language (IL), which is executed by the CLR (Common Language Runtime).</p>
+            <h3>Explanation</h3>
+            <p>Steps:</p>
+            <ol class="list-decimal list-inside">
+                <li>C# Compiler (<code>csc.exe</code>) converts code into IL.</li>
+                <li>IL is stored in an assembly (.exe or .dll).</li>
+                <li>CLR’s Just-In-Time (JIT) compiler converts IL to machine code.</li>
+                <li>OS executes the program.</li>
+            </ol>
+            <pre><code>Program.cs → csc Program.cs → Program.exe → CLR → Output</code></pre>
+            <div class="analogy"><b>Analogy:</b> Think of it like translating a book from English → an intermediate “symbol language” → then into Hindi when you read it.</div>
+            <pre><code>// Save this as Program.cs
+using System;
+class Demo {
+    static void Main() {
+        Console.WriteLine("Compilation Demo");
+    }
+}
+// Compile: csc Program.cs
+// Run: Program.exe</code></pre>
+            <div class="exam-notes"><b>Exam Notes:</b> Compilation in C# involves 2 steps – compiling to IL and JIT compiling to native code at runtime.</div>
+            <div class="practice-section">
+                <b>Practice:</b>
+                <ul>
+                    <li>Q1: What is IL code?</li>
+                    <li>Q2: Role of CLR in execution?</li>
+                </ul>
+                <b>Coding Exercise:</b> Write and compile a simple program that prints today’s date.
+            </div>
+        </section>
+
+        <!-- ================== 3. Structure ================== -->
+        <section id="structure" class="section-card">
+            <h2>General Structure of a C# Program</h2>
+            <p><b>Definition:</b> Every C# program follows a standard structure with namespaces, classes, and the Main method.</p>
+            <pre><code>using System;   // Namespace
+namespace MyApp {
+    class Program {
+        static void Main(string[] args) {
+            Console.WriteLine("Hello World");
+        }
+    }
+}</code></pre>
+            <h3>Explanation</h3>
+            <ul class="list-disc list-inside">
+                <li><b>using</b> – Import namespaces</li>
+                <li><b>namespace</b> – Groups code logically</li>
+                <li><b>class</b> – Container for code</li>
+                <li><b>Main()</b> – Entry point of program</li>
+            </ul>
+            <div class="analogy"><b>Analogy:</b> Like a book: cover page (namespace), chapters (classes), main story start (Main method).</div>
+            <div class="exam-notes"><b>Exam Notes:</b> Structure: using → namespace → class → Main()</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: What is the entry point in C#?</li>
+                    <li>Q2: Why is Main() static?</li>
+                </ul>
+                <b>Coding Exercise:</b> Write a C# program with a namespace <code>StudentApp</code> containing a class <code>Student</code>.
+            </div>
+        </section>
+
+        <!-- ================== (The rest of the 16 sub-topics follow same format...) ================== -->
+
+        <!-- I have the full draft for all 19 topics, but since message length is limited, 
+             do you want me to continue by pasting the remaining 16 sections in the NEXT response? -->
+                     <!-- ================== 4. Creating and Using a DLL ================== -->
+        <section id="dll" class="section-card">
+            <h2>Creating and Using a DLL</h2>
+            <h3>Definition</h3>
+            <p>A DLL (Dynamic Link Library) is a reusable library file that contains compiled code, which can be used by multiple applications.</p>
+            <h3>Explanation</h3>
+            <ol class="list-decimal list-inside">
+                <li>Write a class library in C#.</li>
+                <li>Compile using <code>csc /target:library File.cs</code> → generates <code>.dll</code>.</li>
+                <li>Reference DLL in other projects using <code>using</code> statement.</li>
+            </ol>
+            <div class="analogy"><b>Analogy:</b> A DLL is like a “shared kitchen” in a hostel. Everyone can use it instead of each room having its own kitchen.</div>
+            <pre><code>// MyLib.cs
+public class Calculator {
+    public int Add(int a, int b) {
+        return a + b;
+    }
+}
+// Compile: csc /target:library MyLib.cs
+// Generates MyLib.dll</code></pre>
+            <div class="exam-notes"><b>Exam Notes:</b> DLL = code reuse, modularity, smaller executables.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: What is a DLL?</li>
+                    <li>Q2: How do you create a DLL in C#?</li>
+                </ul>
+                <b>Coding Exercise:</b> Create a DLL with a class <code>MathOps</code> having a method <code>Multiply()</code>.
+            </div>
+        </section>
+
+        <!-- ================== 5. Data Types ================== -->
+        <section id="datatypes" class="section-card">
+            <h2>Data Types in C#</h2>
+            <h3>Definition</h3>
+            <p>Data types define the kind of data a variable can hold (int, float, char, etc.).</p>
+            <h3>Explanation</h3>
+            <ul class="list-disc list-inside">
+                <li><b>Value Types</b> → int, float, bool, structs</li>
+                <li><b>Reference Types</b> → classes, objects, strings, arrays</li>
+                <li><b>Pointer Types</b> → memory addresses (unsafe code)</li>
+            </ul>
+            <div class="analogy"><b>Analogy:</b> Think of “data types” as boxes of different shapes. You can only put certain things inside the right box.</div>
+            <pre><code>int age = 21;
+double pi = 3.14;
+string name = "Gaurav";</code></pre>
+            <div class="exam-notes"><b>Exam Notes:</b> 3 main categories → Value, Reference, Pointer. Value stored in stack, reference stored in heap.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: Difference between value and reference types?</li>
+                    <li>Q2: Is string a value or reference type?</li>
+                </ul>
+                <b>Coding Exercise:</b> Declare variables of all primitive types and print them.
+            </div>
+        </section>
+
+        <!-- ================== 6. Value vs Reference ================== -->
+        <section id="valueref" class="section-card">
+            <h2>Value Types and Reference Types</h2>
+            <p><b>Definition:</b> Value types store data directly, while reference types store a reference (address) to the actual data.</p>
+            <pre><code>int x = 10;       // Value type (stack)
+string s = "Hi";  // Reference type (heap)</code></pre>
+            <div class="analogy"><b>Analogy:</b> Value type = writing a number directly on paper. Reference type = writing the page number where the number is written.</div>
+            <div class="exam-notes"><b>Exam Notes:</b> Value = stack, Reference = heap. Structures are value types; classes are reference types.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: Give 2 examples of value and reference types.</li>
+                </ul>
+                <b>Coding Exercise:</b> Write a program that demonstrates difference by copying values and references.
+            </div>
+        </section>
+
+        <!-- ================== 7. Boxing and Unboxing ================== -->
+        <section id="boxing" class="section-card">
+            <h2>Boxing and UnBoxing</h2>
+            <p><b>Definition:</b> Boxing converts a value type into an object (reference type). Unboxing extracts the value type from the object.</p>
+            <pre><code>int num = 123;       // Value
+object obj = num;    // Boxing
+int x = (int)obj;    // Unboxing</code></pre>
+            <div class="analogy"><b>Analogy:</b> Boxing = putting a gift (value) into a box (object). Unboxing = opening the box to take it out.</div>
+            <div class="exam-notes"><b>Exam Notes:</b> Boxing = implicit, Unboxing = explicit.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: Define boxing and unboxing.</li>
+                </ul>
+                <b>Coding Exercise:</b> Demonstrate boxing/unboxing with float.
+            </div>
+        </section>
+
+        <!-- ================== 8. Arrays ================== -->
+        <section id="arrays" class="section-card">
+            <h2>Arrays</h2>
+            <p><b>Definition:</b> Arrays store multiple values of the same type in a single variable.</p>
+            <h3>Types</h3>
+            <ul class="list-disc list-inside">
+                <li><b>Single-Dimensional</b> → <code>int[] arr = new int[5];</code></li>
+                <li><b>Multi-Dimensional</b> → <code>int[,] matrix = new int[3,3];</code></li>
+                <li><b>Jagged</b> → array of arrays <code>int[][] jag = new int[2][];</code></li>
+            </ul>
+            <div class="analogy"><b>Analogy:</b> Think of arrays as parking lots. Single row = 1D, multi-row grid = 2D, jagged = uneven rows.</div>
+            <div class="exam-notes"><b>Exam Notes:</b> Arrays are reference types. Index starts at 0. Jagged arrays allow irregular sizes.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: Difference between multi-dimensional and jagged array?</li>
+                </ul>
+                <b>Coding Exercise:</b> Create a 2D array and print it in matrix form.
+            </div>
+        </section>
+
+        <!-- ================== 9. Nullable Types ================== -->
+        <section id="nullable" class="section-card">
+            <h2>Nullable Types</h2>
+            <p><b>Definition:</b> Nullable types allow value types (like int, bool) to store null.</p>
+            <pre><code>int? num = null;
+if(num.HasValue) Console.WriteLine(num.Value);</code></pre>
+            <div class="analogy"><b>Analogy:</b> Nullable = a special “box” that can either hold a number or be empty.</div>
+            <div class="exam-notes"><b>Exam Notes:</b> Nullable types declared as <code>T?</code>, useful for databases where fields can be null.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: How to declare nullable int?</li>
+                </ul>
+                <b>Coding Exercise:</b> Write program that checks if a nullable bool is true, false, or null.
+            </div>
+        </section>
+
+        <!-- ================== 10. Implicit Variables ================== -->
+        <section id="implicit" class="section-card">
+            <h2>Implicitly Typed Local Variables</h2>
+            <p><b>Definition:</b> The <code>var</code> keyword lets the compiler infer the data type at compile time.</p>
+            <pre><code>var name = "C#"; // string
+var num = 100;   // int</code></pre>
+            <div class="analogy"><b>Analogy:</b> Like telling your assistant “buy 2” without saying apples/oranges – they infer based on context.</div>
+            <div class="exam-notes"><b>Exam Notes:</b> Type decided at compile time. Not same as dynamic.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: What is var keyword?</li>
+                </ul>
+                <b>Coding Exercise:</b> Use var to create variables and print their type using <code>GetType()</code>.
+            </div>
+        </section>
+
+                <!-- ================== 11. Var vs Dynamic ================== -->
+        <section id="vardynamic" class="section-card">
+            <h2>Var vs Dynamic</h2>
+            <p><b>Definition:</b> Both are used for flexible typing, but differ in behavior.</p>
+            <ul class="list-disc list-inside">
+                <li><b>var</b> → Compile-time type inference.</li>
+                <li><b>dynamic</b> → Runtime type binding.</li>
+            </ul>
+            <pre><code>var x = 10;       // int at compile time
+dynamic y = 10;   // type decided at runtime</code></pre>
+            <div class="analogy"><b>Analogy:</b> var = filling the form with fixed details upfront. dynamic = leaving details blank to be filled later.</div>
+            <div class="exam-notes"><b>Exam Notes:</b> var → type safe, faster. dynamic → slower, may cause runtime errors.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: Difference between var and dynamic?</li>
+                </ul>
+                <b>Coding Exercise:</b> Use both and check <code>GetType()</code> at runtime.
+            </div>
+        </section>
+
+        <!-- ================== 12. Is and As Operators ================== -->
+        <section id="isas" class="section-card">
+            <h2>Is and As Operators</h2>
+            <p><b>Definition:</b></p>
+            <ul class="list-disc list-inside">
+                <li><b>is</b> → Checks type compatibility.</li>
+                <li><b>as</b> → Performs safe type casting, returns null if conversion fails.</li>
+            </ul>
+            <pre><code>object obj = "Hello";
+if(obj is string) Console.WriteLine("Yes");
+
+object obj2 = "C#";
+string str = obj2 as string;  // safe cast</code></pre>
+            <div class="analogy"><b>Analogy:</b> is = asking “Is this a car?”. as = trying to drive it, but safely failing if it isn’t.</div>
+            <div class="exam-notes"><b>Exam Notes:</b> Use is for checking, as for casting.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: Difference between is and as?</li>
+                </ul>
+                <b>Coding Exercise:</b> Write a program using is and as with objects.
+            </div>
+        </section>
+
+        <!-- ================== 13. Ref vs Out ================== -->
+        <section id="refout" class="section-card">
+            <h2>Ref vs Out Keywords</h2>
+            <ul class="list-disc list-inside">
+                <li><b>ref</b> → Passes variable by reference (must be initialized before use).</li>
+                <li><b>out</b> → Also passes by reference (must be assigned inside the method).</li>
+            </ul>
+            <pre><code>void Add(ref int a) { a += 10; }
+void Sub(out int b) { b = 5; }</code></pre>
+            <div class="analogy"><b>Analogy:</b> ref = lending something already filled. out = lending an empty box that must be filled before return.</div>
+            <div class="exam-notes"><b>Exam Notes:</b> ref requires initialization. out requires assignment.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: Difference between ref and out?</li>
+                </ul>
+                <b>Coding Exercise:</b> Demonstrate both with different methods.
+            </div>
+        </section>
+
+       <!-- ============================== -->
+<!-- The ‘object’ base class in .NET -->
+<!-- ============================== -->
+<section id="object" class="section-card">
+    <h2>The ‘object’ base class in .NET</h2>
+
+    <h3>Definition/Concept</h3>
+    <p>In .NET, <b>System.Object</b> (or simply <b>object</b>) is the root base class for all types. Every class or struct in C# inherits from it automatically.</p>
+
+    <h3>Detailed Explanation</h3>
+    <ul class="list-disc pl-6">
+        <li><b>Inherited Methods:</b> ToString(), Equals(), GetHashCode(), GetType().</li>
+        <li><b>Implicit Inheritance:</b> class MyClass { } is same as class MyClass : object { }.</li>
+        <li><b>Overriding:</b> You can override ToString(), Equals(), etc., in your own class.</li>
+        <li><b>Boxing:</b> Value types stored in object are boxed.</li>
+    </ul>
+
+    <div class="analogy">
+        <b>Analogy:</b> Object is like the “common ancestor” in a family tree — all types in .NET come from it.
+    </div>
+
+    <h3>Diagram</h3>
+    <pre>
+           Object
+           /   \
+        Int32  String
+           \
+          Double
+    </pre>
+
+    <h3>Code Example</h3>
+    <pre><code>object o1 = 123;            
+object o2 = "Hello";        
+Console.WriteLine(o1.ToString());  // "123"
+Console.WriteLine(o2.ToString());  // "Hello"
+
+class Person {
+    public string Name;
+    public override string ToString() => $"Person: {Name}";
+}
+Person p = new Person { Name = "Alice" };
+Console.WriteLine(p.ToString());  // "Person: Alice"</code></pre>
+
+    <div class="exam-notes">
+        <b>Exam Notes:</b><br>
+        - Root of .NET type system.<br>
+        - Provides methods like ToString(), Equals(), GetHashCode().<br>
+        - Can store any type using object.<br>
+        - Custom classes often override ToString() and Equals().
+    </div>
+
+    <div class="practice-section">
+        <b>Practice:</b><br>
+        1. Why can we write <code>object o = 5;</code>?<br>
+        2. What is <code>GetType()</code> used for?<br>
+        3. What is the default base class if none is specified?<br>
+        <b>Exercise:</b> Create a <code>Book</code> class with Title and override ToString(). Store it in an object and call ToString().
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- Equals() vs == -->
+<!-- ============================== -->
+<section id="equals" class="section-card">
+    <h2>Equals() vs ==</h2>
+
+    <h3>Definition/Concept</h3>
+    <p><b>==</b> is an operator that can be overloaded. <b>.Equals()</b> is a virtual method inherited from Object. By default, both check reference equality, but types like string override them to compare values.</p>
+
+    <h3>Detailed Explanation</h3>
+    <ul class="list-disc pl-6">
+        <li><b>Value types:</b> == and Equals() both compare values.</li>
+        <li><b>Strings:</b> both compare contents (case-sensitive).</li>
+        <li><b>Reference types (default):</b> == and Equals() compare references unless overridden.</li>
+    </ul>
+
+    <div class="analogy">
+        <b>Analogy:</b> <code>==</code> is like asking “Do we point to the same toolbox?” while <code>Equals()</code> (when overridden) asks “Do both toolboxes contain the same tools?”
+    </div>
+
+    <h3>Code Example</h3>
+    <pre><code>int i = 5, j = 5;
+Console.WriteLine(i == j);       // True
+Console.WriteLine(i.Equals(j));  // True
+
+string s1 = "test";
+string s2 = String.Copy(s1);
+Console.WriteLine(s1 == s2);       // True
+Console.WriteLine(s1.Equals(s2));  // True
+
+class Person { public string Name; }
+Person p1 = new Person { Name="Bob" };
+Person p2 = new Person { Name="Bob" };
+Console.WriteLine(p1 == p2);       // False
+Console.WriteLine(p1.Equals(p2));  // False</code></pre>
+
+    <div class="exam-notes">
+        <b>Exam Notes:</b><br>
+        - <b>==</b>: Operator, can be overloaded.<br>
+        - <b>Equals()</b>: Virtual method, can be overridden.<br>
+        - Strings override both for content comparison.<br>
+        - Custom classes should override both consistently.
+    </div>
+
+    <div class="practice-section">
+        <b>Practice:</b><br>
+        1. What is default behavior of Equals()?<br>
+        2. Why might == and Equals() differ for string?<br>
+        3. Do value types behave differently?<br>
+        <b>Exercise:</b> Compare strings using ==, Equals(), and ReferenceEquals().
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- String vs StringBuilder -->
+<!-- ============================== -->
+<section id="string-sb" class="section-card">
+    <h2>String vs StringBuilder</h2>
+
+    <h3>Definition/Concept</h3>
+    <p><b>string:</b> immutable text type.<br><b>StringBuilder:</b> mutable sequence of characters for efficient modifications.</p>
+
+    <h3>Detailed Explanation</h3>
+    <p>String creates new objects on each modification. StringBuilder modifies content in-place, which is faster in loops or repeated changes.</p>
+
+    <div class="analogy">
+        <b>Analogy:</b> string is like writing on stone — you must make a new stone for each change. StringBuilder is like a whiteboard — you can erase and rewrite.
+    </div>
+
+    <h3>Code Example</h3>
+    <pre><code>// String (immutable)
+string s = "Hello";
+s += " World";          // New string created
+s = s.Replace('o','a'); // "Hella Warld"
+
+// StringBuilder (mutable)
+var sb = new StringBuilder("Hello");
+sb.Append(" World");
+sb.Replace('o','a');
+Console.WriteLine(sb.ToString());</code></pre>
+
+    <div class="exam-notes">
+        <b>Exam Notes:</b><br>
+        - <b>string:</b> immutable, new object each change.<br>
+        - <b>StringBuilder:</b> mutable, efficient in loops.<br>
+        - Use StringBuilder for performance in repeated concatenations.
+    </div>
+
+    <div class="practice-section">
+        <b>Practice:</b><br>
+        1. Why is string immutable?<br>
+        2. When should you use StringBuilder?<br>
+        3. What happens when concatenating strings in a loop?<br>
+        <b>Exercise:</b> Use StringBuilder to generate Fibonacci series as a comma-separated string.
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- Various String Class Methods -->
+<!-- ============================== -->
+<section id="string-methods" class="section-card">
+    <h2>Various String Class Methods</h2>
+
+    <h3>Definition/Concept</h3>
+    <p>Strings in C# have many methods: <b>Length</b>, <b>ToUpper()</b>, <b>ToLower()</b>, <b>Substring()</b>, <b>IndexOf()</b>, <b>Contains()</b>, <b>Replace()</b>, <b>Split()</b>, <b>Trim()</b>, etc.</p>
+
+    <h3>Code Example</h3>
+    <pre><code>string txt = " Hello, C#! ";
+Console.WriteLine(txt.Length);      // 11
+Console.WriteLine(txt.Trim());      // "Hello, C#!"
+Console.WriteLine(txt.ToUpper());   // " HELLO, C#! "
+
+string data = "apple,banana,cherry";
+string[] fruits = data.Split(',');
+Console.WriteLine(fruits[1]);       // "banana"</code></pre>
+
+    <div class="exam-notes">
+        <b>Exam Notes:</b><br>
+        - Strings are immutable.<br>
+        - Methods return new strings.<br>
+        - Common: ToUpper(), ToLower(), Substring(), IndexOf(), Replace(), Split(), Trim().
+    </div>
+
+    <div class="practice-section">
+        <b>Practice:</b><br>
+        1. What does <code>Substring(2,3)</code> return for "abcdef"?<br>
+        2. How do you check if a string contains "C#"?<br>
+        3. What does Split(' ') return?<br>
+        <b>Exercise:</b> Take user input and output: length, uppercase, first word, and check if it contains "C#".
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- Default & Named Parameters -->
+<!-- ============================== -->
+<section id="params" class="section-card">
+    <h2>Default & Named Parameters</h2>
+
+    <h3>Definition/Concept</h3>
+    <p><b>Default parameters:</b> allow omitting arguments with predefined values.<br><b>Named parameters:</b> allow specifying arguments by name in any order.</p>
+
+    <h3>Code Example</h3>
+    <pre><code>void SendEmail(string to, string subject="No subject", bool isHtml=false)
+{
+    Console.WriteLine($"To: {to}, Subject: {subject}, HTML: {isHtml}");
+}
+
+SendEmail("user@test.com");                       
+SendEmail("user@test.com", subject: "Hello!");
+SendEmail("user@test.com", isHtml:true, subject:"Hi");</code></pre>
+
+    <div class="analogy">
+        <b>Analogy:</b> Like ordering food with default sides. You can just say “Steak” (defaults applied) or specify “Steak, with Salad=false, Potatoes=true” by naming arguments.
+    </div>
+
+    <div class="exam-notes">
+        <b>Exam Notes:</b><br>
+        - Default parameters reduce overloads.<br>
+        - Named parameters improve readability.<br>
+        - Named args can be reordered.<br>
+        - Rule: defaults must come last in signature.
+    </div>
+
+    <div class="practice-section">
+        <b>Practice:</b><br>
+        1. Write a Print method with default <code>times=1</code>.<br>
+        2. Rewrite LogInfo("Server","Disk Full",true) with named args.<br>
+        3. Can you define defaults before non-defaults?<br>
+        <b>Exercise:</b> Create DisplayInfo(name, age=0, city="Unknown") and call it with just name and with all named args.
+    </div>
+</section>
+
+        <!-- ================== 19. Parse, TryParse, Convert ================== -->
+        <section id="parsetryparse" class="section-card">
+            <h2>Parse, TryParse, and Convert</h2>
+            <ul class="list-disc list-inside">
+                <li><b>Parse()</b> → Converts string to value type (throws exception if invalid).</li>
+                <li><b>TryParse()</b> → Safe conversion, returns bool.</li>
+                <li><b>Convert</b> → Converts between types, handles null.</li>
+            </ul>
+            <pre><code>int a = int.Parse("123");              // Parse
+bool ok = int.TryParse("abc", out int b); // TryParse
+double d = Convert.ToDouble("45.6");   // Convert</code></pre>
+            <div class="analogy"><b>Analogy:</b> Parse = strict teacher (throws error). TryParse = friendly teacher (gives result + success/fail). Convert = multipurpose teacher (handles nulls too).</div>
+            <div class="exam-notes"><b>Exam Notes:</b> TryParse → best for safe conversions without exceptions.</div>
+            <div class="practice-section">
+                <ul>
+                    <li>Q1: Difference between Parse and TryParse?</li>
+                </ul>
+                <b>Coding Exercise:</b> Read input string and convert to int safely using TryParse.
+            </div>
+        </section>
+
+
+    </div>
+
+    <script>
+        // Dark mode toggle logic
+        const darkModeBtn = document.getElementById('darkModeToggle');
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            darkModeBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // ...Your existing JavaScript remains unchanged...
+        const toggleButton = document.querySelector('.menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
